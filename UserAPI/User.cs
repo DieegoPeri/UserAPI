@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using System.Text.Json;
 
 namespace UserAPI
 {
@@ -60,6 +61,15 @@ namespace UserAPI
             {
                 // Log exception
             }
+        }
+
+        public string GetUserJson()
+        {
+            // If the UserName is not set, then it is not loaded
+            if (string.IsNullOrEmpty(UserName)) 
+                Load(UserId, Email);
+
+            return JsonSerializer.Serialize(this);
         }
     }
 }
